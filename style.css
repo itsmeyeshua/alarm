@@ -1,0 +1,213 @@
+:root {
+  --background-color: #4A98F7;
+  --darker-background-color: #4085da;
+}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  font-size: 19px;
+}
+body, .wrapper, .content{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+}
+body{
+  padding: 0 10px;
+  min-height: 100vh;
+  background: var(--background-color);
+}
+.wrapper{
+  width: 440px;
+  margin: 60px 0;
+  padding: 30px 30px 38px;
+  background: #fff;
+  border-radius: 10px;
+  flex-direction: column;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  gap: 15px;
+}
+.wrapper img{
+  max-width: 103px;
+}
+.wrapper h1{
+  font-size: 38px;
+  font-weight: 500;
+}
+
+.content {
+  width: 100%;
+  gap: 5px;
+}
+
+.column {
+  padding: 0 10px;
+  border: 1px solid #bfbfbf;
+  border-radius: 10px;
+  flex-grow: 1;
+  cursor: pointer;
+}
+
+.column select {
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 50px;
+  font-size: 17px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.alarm-title {
+  width: max-content;
+}
+
+/*           slider             */
+.wrapper button {
+  all: unset;
+  background: var(--darker-background-color);
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  border-radius: 5px;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+.switch[checked="true"] .slider {
+  background-color: #2196F3;
+}
+
+.switch[checked="true"] .slider:before {
+  transform: translateX(26px);
+}
+
+.switch[checked="false"] .slider {
+  background-color: #ccc;
+}
+
+.switch[checked="false"] .slider:before {
+  transform: translateX(0);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/*           End slider             */
+
+.alarm-list-container {
+  background-color: #414141ed;
+  margin: 30px 0;
+  padding: 18px;
+  border-radius: 15px;
+  flex: 1;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  display: none;
+}
+.alarm-list {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  color: white;
+  align-items: center;
+  background-color: #414141ed;
+  padding: 18px;
+  border-radius: 15px;
+  padding: 10px 18px;
+}
+
+.cancel-button {
+  all: unset;
+  padding: 5px 10px;
+  border: white 1px solid;
+  border-radius: 10px;
+  cursor: pointer;
+  transform: transition 1s ease-in;
+}
+
+.cancel-button:hover {
+  background-color: rgb(80, 80, 80);
+}
+
+/* DELETE ICON */
+.delete-icon {
+  width: 25px;
+  filter: invert(1);
+  cursor: pointer;
+  transition: filter 0.1s;
+}
+
+.delete-icon:hover {
+  filter: invert(18%) sepia(86%) saturate(7481%) hue-rotate(358deg);
+  animation: shake-bottom 0.5s ease-in-out;
+}
+
+@keyframes shake-bottom {
+  0%, 100% { transform: rotate(0deg); transform-origin: bottom center; }
+  10% { transform: rotate(5deg); transform-origin: bottom center; }
+  20% { transform: rotate(-5deg); transform-origin: bottom center; }
+  30% { transform: rotate(4deg); transform-origin: bottom center; }
+  40% { transform: rotate(-4deg); transform-origin: bottom center; }
+  50% { transform: rotate(3deg); transform-origin: bottom center; }
+  60% { transform: rotate(-3deg); transform-origin: bottom center; }
+  70% { transform: rotate(2deg); transform-origin: bottom center; }
+  80% { transform: rotate(-2deg); transform-origin: bottom center; }
+  90% { transform: rotate(1deg); transform-origin: bottom center; }
+}
+/* END OF DELETE ICON */
+
+.div-label-Delete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
