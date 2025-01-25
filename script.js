@@ -6,6 +6,35 @@ setAlarmBtn = document.querySelector("button");
 let alarmTimePause = [], alarmTimeActive = [], isAlarmSet,
 ringtone = new Audio("./files/ringtone.mp3");
 
+function requestNotificationPermission() {
+    if (Notification.permission !== "granted") {
+        Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+                console.log("Permission granted.");
+            } else {
+                console.log("Permission denied.");
+            }
+        });
+    }
+}
+requestNotificationPermission();
+
+function showNotification(title) {
+    if (Notification.permission === "granted") {
+        let notification = new Notification(title, {
+            icon: "./files/alarm-clock-watch-svgrepo-com.svg",
+            tag: "dup",
+        });
+
+        notification.onclick = function () {
+            window.focus();
+            this.close();
+        };
+    } else {
+        console.log("Permission not granted.");
+    }
+}
+
 for (let i = 1; i <= 12; i++) {
     i = i < 10 ? `0${i}` : i;
     let option = document.createElement("option");
@@ -109,26 +138,35 @@ setInterval(() => {
         ringtone.loop = true;
         
         const alarmLists = document.querySelectorAll(".alarm-list");
-
+        
         alarmLists.forEach(alarmList => {
-            const alarmTimeElement = alarmList.querySelector(".alarm-title");
+            const alarmTimeElement = alarmList.firstElementChild;
+            const divLabelDelete = alarmTimeElement.nextElementSibling;
+    
+            console.log(`Checking alarm: ${alarmTimeElement.innerText} against ${currentTime.innerText}`);
+            
             if (!alarmList.querySelector(".cancel-button")) {
                 if (alarmTimeElement.innerText === `${h}:${m} ${ampm}`) {
                     let buttonCancel = document.createElement("button");
                     buttonCancel.classList.add("cancel-button");
                     buttonCancel.innerText = "Cancel";
-
-                    const labelElement = alarmList.querySelector("label");
-                    alarmList.insertBefore(buttonCancel, labelElement);
-
-                    buttonCancel.addEventListener("click", () => {
-                        ringtone.pause();
-                        ringtone.currentTime = 0;
-                        buttonCancel.remove();
-                    });
+    
+                    if (alarmTimeElement && divLabelDelete) {
+                        alarmList.insertBefore(buttonCancel, divLabelDelete);
+                        
+                        buttonCancel.addEventListener("click", () => {
+                            ringtone.pause();
+                            ringtone.currentTime = 0;
+                            buttonCancel.remove();
+                        });
+                        console.log("Cancel button added");
+                    } else {
+                        console.log("Label element not found");
+                    }
                 }
             }
         });
+        showNotification("It's time");
     }
 }, 1000);
 
