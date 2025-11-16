@@ -54,6 +54,7 @@ body{
 }
 
 .column select {
+  background-color: white;
   border: none;
   outline: none;
   width: 100%;
@@ -148,10 +149,31 @@ body{
   border-radius: 15px;
   flex: 1;
   max-width: 440px;
+  min-width: 315px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   display: none;
+  max-height: calc(100vh - 10vh);
+  overflow-y: auto;
+}
+
+.alarm-list-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.alarm-list-container::-webkit-scrollbar-track {
+  background: #555;
+  border-radius: 4px;
+}
+
+.alarm-list-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.alarm-list-container::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
 }
 .alarm-list {
   display: flex;
@@ -210,4 +232,82 @@ body{
   justify-content: center;
   align-items: center;
   gap: 10px;
+}
+
+.soap-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #333;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    max-width: 400px;
+    animation: slideInRight 0.3s ease-out;
+    border-left: 4px solid #4A98F7;
+}
+
+.soap-alert-error {
+    border-left-color: #ff4444;
+    background: #333;
+}
+
+.soap-alert-warning {
+    border-left-color: #ffbb33;
+    background: #333;
+}
+
+.soap-alert-success {
+    border-left-color: #00C851;
+    background: #333;
+}
+
+.soap-alert-message {
+    flex: 1;
+    font-size: 16px;
+}
+
+.soap-alert-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.soap-alert-close:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .soap-alert {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
 }

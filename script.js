@@ -6,6 +6,38 @@ setAlarmBtn = document.querySelector("button");
 let alarmTimePause = [], alarmTimeActive = [], isAlarmSet,
 ringtone = new Audio("./files/ringtone.mp3");
 
+function createSoapAlert(message, type = "info") {
+    const existingAlert = document.querySelector('.soap-alert');
+    if (existingAlert) {
+        existingAlert.remove();
+    }
+
+    const soapAlert = document.createElement('div');
+    soapAlert.className = `soap-alert soap-alert-${type}`;
+    
+    const messageEl = document.createElement('span');
+    messageEl.className = 'soap-alert-message';
+    messageEl.textContent = message;
+    
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'soap-alert-close';
+    closeBtn.innerHTML = '&times;';
+    closeBtn.onclick = () => soapAlert.remove();
+    
+    soapAlert.appendChild(messageEl);
+    soapAlert.appendChild(closeBtn);
+    
+    document.body.appendChild(soapAlert);
+    
+    setTimeout(() => {
+        if (soapAlert.parentElement) {
+            soapAlert.remove();
+        }
+    }, 5000);
+    
+    return soapAlert;
+}
+
 function requestNotificationPermission() {
     if (Notification.permission !== "granted") {
         Notification.requestPermission().then(permission => {
@@ -173,10 +205,10 @@ setInterval(() => {
 setAlarmBtn.addEventListener("click", function setAlarm() {
     let time = `${selectMenu[0].value}:${selectMenu[1].value}:00 ${selectMenu[2].value}`;
     if (time.includes("Hour") || time.includes("Minute") || time.includes("AM/PM")) {
-        return alert("Select a valid time to set Alarm!");
+        return createSoapAlert("Select a valid time to set Alarm!", "error");
     }
     if (alarmTimeActive.includes(time))
-        return alert("rah already kayna fl'alarm yaaa wld l97ba");
+        return createSoapAlert("Alarm already exists!", "warning");
     alarmTimeActive.push(time);
     window.localStorage.alarmTimeActive = JSON.stringify(alarmTimeActive);
 
