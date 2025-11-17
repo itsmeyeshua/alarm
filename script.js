@@ -149,7 +149,7 @@ function alarmCheckLocal(bool, element) {
     alarmListContainer.appendChild(alarmList);  
 }
 
-setInterval(() => {
+function updateClockAndCheckAlarms() {
     let date = new Date(),
     h = date.getHours(),
     m = date.getMinutes(),
@@ -174,8 +174,6 @@ setInterval(() => {
         alarmLists.forEach(alarmList => {
             const alarmTimeElement = alarmList.firstElementChild;
             const divLabelDelete = alarmTimeElement.nextElementSibling;
-    
-            console.log(`Checking alarm: ${alarmTimeElement.innerText} against ${currentTime.innerText}`);
             
             if (!alarmList.querySelector(".cancel-button")) {
                 if (alarmTimeElement.innerText === `${h}:${m} ${ampm}`) {
@@ -191,16 +189,17 @@ setInterval(() => {
                             ringtone.currentTime = 0;
                             buttonCancel.remove();
                         });
-                        console.log("Cancel button added");
-                    } else {
-                        console.log("Label element not found");
                     }
                 }
             }
         });
         showNotification("It's time");
     }
-}, 1000);
+}
+
+updateClockAndCheckAlarms();
+
+setInterval(updateClockAndCheckAlarms, 1000);
 
 setAlarmBtn.addEventListener("click", function setAlarm() {
     let time = `${selectMenu[0].value}:${selectMenu[1].value}:00 ${selectMenu[2].value}`;
@@ -325,3 +324,75 @@ document.addEventListener("click", function(e) {
         }
     }
 })
+
+// right click
+document.addEventListener('contextmenu', function(e) {
+    if (e.target.classList.contains('delete-icon')) {
+        e.preventDefault();
+        
+        const existingMenu = document.querySelector('.context-menu');
+        if (existingMenu) {
+            existingMenu.remove();
+        }
+        
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'context-menu';
+        contextMenu.innerHTML = `
+            <div class="context-menu-item" id="clear-all-alarms">
+                Clear All Alarms
+            </div>
+        `;
+        
+        contextMenu.style.left = e.pageX + 'px';
+        contextMenu.style.top = e.pageY + 'px';
+        
+        document.body.appendChild(contextMenu);
+        
+        const clearAllItem = document.getElementById('clear-all-alarms');
+        clearAllItem.addEventListener('click', function() {
+            clearAllAlarms();
+            contextMenu.remove();
+        });
+        
+        const removeMenu = () => {
+            contextMenu.remove();
+            document.removeEventListener('click', removeMenu);
+        };
+        document.addEventListener('click', removeMenu);
+    }
+});
+
+// Function to clear all alarms
+function clearAllAlarms() {
+    alarmTimeActive = [];
+    alarmTimePause = [];
+    
+    window.localStorage.removeItem('alarmTimeActive');
+    window.localStorage.removeItem('alarmTimePause');
+    
+    const alarmListContainer = document.querySelector('.alarm-list-container');
+    alarmListContainer.innerHTML = '';
+    alarmListContainer.style.display = 'none';
+    ringtone.pause();
+    ringtone.currentTime = 0;
+    createSoapAlert('All alarms have been cleared!', 'success');
+}
+
+
+function updateContainerHeight() {
+    const wrapper = document.querySelector('.wrapper');
+    const footer = document.querySelector('.footer');
+    const alarmListContainer = document.querySelector('.alarm-list-container');
+    const container = document.querySelector('.container');
+    container.style.minHeight = `calc(100vh - ${footer.offsetHeight}px`;
+
+    if (window.innerWidth <= 768) {
+        const wrapperHeight = wrapper.offsetHeight;
+        const availableHeight = `calc(100vh - ${wrapperHeight}px - ${footer.offsetHeight}px - 80px`;
+        alarmListContainer.style.maxHeight = availableHeight;
+    } else 
+        alarmListContainer.style.maxHeight = `calc(90vh - ${footer.offsetHeight}px`;
+}
+
+window.addEventListener('load', updateContainerHeight);
+window.addEventListener('resize', updateContainerHeight);

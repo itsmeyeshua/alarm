@@ -8,30 +8,38 @@
     <title>Alarm Clock</title>
   </head>
   <body>
-    <div class="wrapper">
-      <h1>00:00:00 PM</h1>
-      <div class="content">
-        <div class="column">
-          <select>
-            <option value="Hour" selected disabled hidden>Hour</option>
-          </select>
+    <div class="container">
+      <div class="wrapper">
+        <h1>00:00:00 PM</h1>
+        <div class="content">
+          <div class="column">
+            <select>
+              <option value="Hour" selected disabled hidden>Hour</option>
+            </select>
+          </div>
+          <div class="column">
+            <select>
+              <option value="Minute" selected disabled hidden>Minute</option>
+            </select>
+          </div>
+          <div class="column">
+            <select>
+              <option value="AM/PM" selected disabled hidden>AM/PM</option>
+            </select>
+          </div>
         </div>
-        <div class="column">
-          <select>
-            <option value="Minute" selected disabled hidden>Minute</option>
-          </select>
-        </div>
-        <div class="column">
-          <select>
-            <option value="AM/PM" selected disabled hidden>AM/PM</option>
-          </select>
-        </div>
+        <button>Set Alarm</button>
       </div>
-      <button>Set Alarm</button>
+  
+      <section class="alarm-list-container"></section>
     </div>
 
-    <section class="alarm-list-container">
-    </section>
+    <footer class="footer">
+      Made by 
+      <a href="https://github.com/itsmeyeshua" target="_blank" class="github-link">
+        itsmeyeshua
+      </a>
+    </footer>
 
 
     <script src="script.js"></script>
