@@ -1,9 +1,8 @@
 # ⏰ Alarm Clock - Vanilla JavaScript Project
 
-
 ## 🎯 Project Purpose
 
-This project was created as a learning exercise to master fundamental web development skills before moving on to JavaScript frameworks.
+This project was created as a learning exercise to master fundamental web development skills before moving on to JavaScript frameworks. [Live Demo](https://alarm-buzzer.vercel.app/)
 
 ## ✨ Features
 
